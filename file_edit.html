@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/bootstrap/css/bootstrap.css?9300">
+    <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/stylesheets/xmo/xmo_components.css?9300">
+     <link rel="stylesheet" type="text/css" href="plugin/webuploader/webuploader.css">
+      <link rel="stylesheet" type="text/css" href="css/webupload-xmo.css">
+      <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/javascripts/layer/skin/layer.css">
+    	<link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/css/my_layer.css?9310">
+
+    <script type="text/javascript" src="http://xmostg.optimix.asia/javascripts/js/jquery-1.7.1.min.js?9300"></script>
+    <script type="text/javascript" src="http://xmostg.optimix.asia/bootstrap/js/bootstrap.min.js?9300"></script>
+
+    <script type="text/javascript" src="plugin/webuploader/webuploader.js"></script>
+    <script type="text/javascript" src="js/webupload-xmo.js"></script>
+    <script type="text/javascript" src="http://xmostg.optimix.asia/javascripts/radialIndicator.min.js?9300"></script>
+    <script type="text/javascript" src="http://xmostg.optimix.asia/javascripts/layer/layer.min.js?9310"></script>
+
+</head>
+<style>
+  #upload_layer_parent .xubox_layer{width:1000px!important;}
+  #upload_layer_parent .xubox_page{width: 980px!important;}
+</style>
+<body>
+
+
+    <div id="webuploader" style="padding:20px;">
+        <button id="edit" class="btn btn-default">edit</button>
+    </div>
+    <input type="button" class="btn btn-default" value="请选择文件" size="30" onclick="file.click()"/>
+  <label id="text" style="display:inline">请选择文件</label>
+  <input type="file" id="file" onchange="$('#text').text(this.value);" name="file" style="position:absolute;
+  filter:alpha(opacity=0);-moz-opacity:0;opacity:0;margin-left:-100px;"size="1" hidefocus/><br/>
+<!--弹出层 -->
+    <div id="upload_layer_parent">
+      <div id="upload-box" class="hide layer_pageContent" style="display: none;">
+
+      <div class="row font_28 l_margin_20 t_margin_10 b_margin_30">广告素材</div>
+      <div class="row error_wrapper" style="position:relative;">
+        <div class="bshare_error  hide" id="asset_message" data-top="70" style="width: 735px; position: absolute; z-index: 100000000; display: none;">
+          <a href="javascript:void(0);" class="close_message" onclick="close_error_pop(this)"></a>
+        </div>
+      </div>
+      <label class="popub-tip">*媒体平台最多需要2-3天的时间去审批。如果有问题，广告素材名称旁边显示</label>
+      <div class="form-horizontal popup-webupload-form" >
+        <form action="http://xmostg.optimix.asia/en/clients/1316/library_assets/create_asset" class="form-horizontal" id="asset_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value=""></div>
+        <input id="library_asset_client_id" name="library_asset[client_id]" type="hidden" value="1316">
+        <div class="control-group">
+          <label class="control-label">
+            <label class="inline" for="library_asset_name">素材名称</label></label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <input class="span5 required" id="library_asset_name" name="library_asset[name]" size="30" style="width:251px;" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">
+            <label class="inline" for="library_asset_destination_url">素材地址</label></label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <label class="radio">
+                  <input checked="checked" id="order_whether_service_0" name="order[whether_service]" type="radio" value="0">
+                  上传素材
+                </label>
+              </div>
+              <div class="span" style="margin-left:100px;">
+                <label class="radio">
+                  <input id="order_whether_service_1" name="order[whether_service]" type="radio" value="1">
+                  从资源中选
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">
+            <label class="inline" for="library_asset_destination_url">素材地址</label></label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <input class="required redirect_url" id="library_asset_destination_url" name="library_asset[destination_url]" size="30" style="width:251px;" type="text">
+                <span class="l_padding_5">*E.g. http://www.i-click.asia</span>
+               </div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">
+            <label class="inline" for="library_asset_destination_url">着陆页地址</label></label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <input class="required redirect_url" id="library_asset_destination_url" name="library_asset[destination_url]" size="30" style="width:251px;" type="text">
+                <span class="l_padding_5">*E.g. http://www.i-click.asia</span>
+               </div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">
+            <label class="inline" for="library_asset_destination_url">最终跳转地址</label></label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <input class="required redirect_url" id="library_asset_destination_url" name="library_asset[destination_url]" size="30" style="width:251px;" type="text">
+                <span class="l_padding_5">*E.g. http://www.i-click.asia</span>
+               </div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">
+            <label class="inline" for="library_asset_destination_url">最终跳转地址</label></label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <textarea style="width:251px;" id="interest_crowd" name="order[interest_crowd]" placeholder="" rows="6"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row r_margin_20">
+          <div class="button_area">
+            <div class="r_margin_0">
+               <div class="outer_cancel">
+                <input class="cancel" type="button" value="CANCEL" id="cancel_button" onclick="Asset.close_form_layer();">
+              </div>
+              <div class="outer_submit">
+                <input class="submit" type="submit" value="Create" id="submit_cost">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      </div>
+
+      <div class="popup-webupload">
+        <label>已上传素材：</label>
+        <div class="popub-webupload-content">
+          <img src="https://xmostg.optimix.asia/images/login/title.png" >
+          <label>640*480 PC视频广告15秒</label>
+          <div class="popub-webupload-button">
+              <div class="webuploader-dnaArea">
+                <div class="webuploader-dnaArea-img">
+                  <img src="./images/image.png"/>
+                </div>
+                <div class="webuploader-dnaArea-tip">
+                  <span>将档案拖曳到这里&nbsp;&nbsp;&nbsp;- 或 -&nbsp;&nbsp;&nbsp;</span><button class="btn" id="filePicker" style="width:80px;">upload</button>
+                  <div class="dnaArea-doc">文档格式：gif,png,jpg,jpeg,swf,zip</div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearboth"></div>
+      </div>
+    </div>
+
+</body>
+ <script type="text/javascript" >
+  var html = '<li>'+
+              '<img src="https://xmostg.optimix.asia/images/login/title.png" >'+
+              '<div><label>300*250</label></div>'+
+              '<div class="dropdown btn-iclick ">'+
+                '<i class="icon-setup icon_act icon_campaign_edit"></i>'+
+                  '<input name="type" type="hidden" value="" />'+
+                '<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'+
+                  'PC-视频广告15秒'+
+                  '<span class="caret arrow-down"></span>'+
+                '</button>'+
+                '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">'+
+                  '<li   data-value="import"><a href="javascript:;">Mobile-视频广告-15秒</a></li>'+
+                  '<li data-value="export"><a href="javascript:;">PC-视频广告15秒</a></li>'+
+                '</ul>'+
+              '</div>'+
+            '</li>';
+
+  //ajax
+  function makeupload(){
+
+
+   //详细文档参考：http://fex.baidu.com/webuploader/getting-started.html
+    new xmoupload({
+
+         // swf文件路径
+        swf: 'plugin/webuploader/Uploader.swf',
+
+        //runtimeOrder:"flash",
+
+        // 文件接收服务端。
+        server: 'http://localhost:8081',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false,
+
+        dnd:'.popub-webupload-button',
+
+        disableGlobalDnd: true,
+
+        paste: document.body,
+
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,swf,png,zip'
+        },
+
+        auto:true,
+
+        //xmo 的相关参数
+        //ZH,EN
+        lang:"EN",
+        uploadError:function(file){
+          $("body").append( '<div id="' + file.id + '" class="item">' +
+              '<h4 class="info">' + file.name + '上传失败</h4>' +
+          '</div>' );
+          setTimeout(function(){$("#"+file.id).remove()},3000);
+        },
+
+        uploadSuccess:function(file,response){
+          $("#dnd-content").append(html);
+          setTimeout(function(){$("#"+file.id).remove()},3000);
+        }
+      })
+  }
+
+  var Bshare_Advertisement = {
+     init : function(){
+       this.init_event_bind();
+       //this.init_table();
+       $("#bshare_img_advertisement_list").show();
+     },
+     close_layer:function(dom){
+       $("body").removeClass("layer_hidden");
+       $(".xubox_shade").hide();
+       $("#"+dom).removeClass("layer_parent_div");
+     },
+     open_layer:function(dom){
+       $("body").addClass("layer_hidden");
+       if($("#"+dom) && $("#"+dom).length>0){
+         $("#"+dom).addClass("layer_parent_div")
+       }else{
+         $(".xubox_layer").wrap('<div id = "'+dom+'" class = "layer_parent_div"></div>')
+       }
+
+       $(".xubox_shade").hide();
+       makeupload();
+     },
+     init_event_bind : function(){
+
+       $(document).on('click.edit_click','.edit_click_btn',function(){
+        $.layer({
+           type: 1,
+           title: false, //不显示默认标题栏
+           shade: [0.5, '#000'],
+           border: [6, 1, '#fff'],
+           area: ['800px', ($(window).height()-100)+'px'],
+           success : bshare_error_stick,
+           page: {dom:'#get-creatives-box'},
+           close: function(index){
+             Bshare_Advertisement.close_layer("ad_layer_parent");
+           }
+         });
+         Bshare_Advertisement.open_layer("ad_layer_parent");
+        $("#select_xmo_ad_serving").attr("checked",true).change();
+         var obj = this;
+         ad_id = $(obj).attr("data_ad_id");
+
+         landing_url = $('#full_land_url_' + ad_id).text();
+         display_url = $("#full_display_url_" + ad_id).text();
+         ad_name = $("#full_ad_name_" + ad_id).text();
+         ad_size = $("#full_ad_size_" + ad_id).text();
+         ad_code = $("#full_ad_code_" + ad_id).text();
+         $("#advertisement_image_edit").val("").change();
+         ad_image_type = $("#full_ad_image_type_" + ad_id).text();
+         is_only_h5_browser = $("#is_only_h5_browser_" + ad_id).text() == 'true';
+
+         $('#upload_ad_div_edit').show();
+         $("#upload_ad_div_add").hide();
+         $('#ad_name_edit').val(ad_name);
+         $("#redirect_url_edit").val(landing_url);
+         $("#display_url_edit").val(display_url);
+         $("#upload_ad_edit ").change();
+         $("#ad_edit_id").val(ad_id);
+         $("#advertisement_xmo_code_edit").val(ad_code);
+
+         if((/\.(swf|zip)$/i).test(ad_image_type)){
+           $("#flash_size_select_edit").show();
+           $("#ad_size_edit").find("select").val(ad_size);
+           $("#ad_size_edit").find("select").addClass("required");
+         }else{
+           $("#flash_size_select_edit").hide();
+           $("#ad_size_edit").find("select").removeClass("required");
+         }
+         (/\.zip$/i).test(ad_image_type) && $("#ad_type").val() == 'true' ? $("#h5_browser_select_edit").show() : $("#h5_browser_select_edit").hide();
+         $("#h5_browser_select_edit input").prop("checked", is_only_h5_browser);
+         $("#ad_size_edit").find("select").attr("disabled", (/\.(zip)$/i).test(ad_image_type));
+         $(".sub_txt").css("color","black");
+         return false;
+       })
+
+     },
+     init_table : function(){
+     this.basic_list = $('#bshare_img_advertisement_list').dataTable({
+       "oLanguage": { "sUrl": "/javascripts/i18n/dataTables-new.zh-cn.txt" },
+       "sDom": "<'row'<'pull-left'f><'table_pagin'p>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
+         "bFilter": true,
+         "bInfo": true,
+         "sPaginationType": "full_numbers",
+         "bPaginate": true,
+         "iDisplayLength": 10,
+        "bLengthChange": false,
+        "bAutoWidth": false,
+         "aaSorting": [],
+       "aoColumnDefs": [
+           { "sWidth": "110px", "sClass": "v_align_middle align_center l_padding_5", "aTargets": [0] },
+           { "sWidth": "120px", "sClass": "word_break", "aTargets": [2] },
+           { "sWidth": "120px", "aTargets": [3] },
+           { "sWidth": "120px", "aTargets": [4] },
+           { "sWidth": "220px", "sClass": "word_break", "aTargets": [5] }]
+      });
+     }
+   }
+
+   function bshare_error_stick(){
+   $('.xubox_page').on('scroll',function(){
+     var box = $('.bshare_error',$(this));
+     var wrapper = $('.error_wrapper',$(this));
+     var topMin = parseInt(box.attr('data-top')) || 0;
+     var top = $(this).scrollTop();
+     top = top > topMin ? top : topMin+top;
+     box.css({top:top});
+     var InnerHeight = box.height();
+     InnerHeight+=40;
+     if($('.bshare_error:visible',$(this)).length == 0){InnerHeight=0;}
+     wrapper.height(InnerHeight);
+   })
+ }
+   $('#edit').on('click',function(){
+     $.layer({
+         type: 1,
+         title: false, //不显示默认标题栏
+         shade: [0.5, '#000'],
+         border: [6, 1, '#fff'],
+         area: ['800px', ($(window).height()-100)+'px'],
+         success : bshare_error_stick,
+         page: {dom:'#upload-box'},
+         close: function(index){
+           Bshare_Advertisement.close_layer("upload_layer_parent");
+         }
+     });
+     Bshare_Advertisement.open_layer("upload_layer_parent");
+     return false;
+ })
+ </script>
+</html>

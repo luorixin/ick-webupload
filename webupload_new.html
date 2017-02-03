@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/bootstrap/css/bootstrap.css?9300">
+    <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/stylesheets/xmo/xmo_components.css?9300">
+     <link rel="stylesheet" type="text/css" href="plugin/webuploader/webuploader.css">
+      <link rel="stylesheet" type="text/css" href="css/webupload-xmo.css">
+
+    <script type="text/javascript" src="http://xmostg.optimix.asia/javascripts/js/jquery-1.7.1.min.js?9300"></script>
+    <script type="text/javascript" src="http://xmostg.optimix.asia/bootstrap/js/bootstrap.min.js?9300"></script>
+
+    <script type="text/javascript" src="plugin/webuploader/webuploader.js"></script>
+    <script type="text/javascript" src="js/webupload-xmo.js"></script>
+    <script type="text/javascript" src="http://xmostg.optimix.asia/javascripts/radialIndicator.min.js?9300"></script>
+
+
+</head>
+
+<body>
+
+
+    <div id="webuploader" style="padding:20px;">
+        <div class="webuploader-fordnd">
+          <div class="webuploader-dnaArea">
+            <div class="webuploader-dnaArea-img">
+              <img src="./images/image.png"/>
+            </div>
+            <div class="webuploader-dnaArea-tip">
+              <span>将档案拖曳到这里&nbsp;&nbsp;&nbsp;- 或 -&nbsp;&nbsp;&nbsp;</span><div class="btn" id="filePicker" style="width:80px;">upload</div>
+              <div class="dnaArea-doc">文档格式：gif,png,jpg,jpeg,swf,zip</div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="webuploader-fordnd-show">
+      <label>上传素材内容：</label>
+      <ul class="webuploader-fordnd-content" id="dnd-content">
+        <li>
+          <img src="https://xmostg.optimix.asia/images/login/title.png" >
+          <div><label>300*250</label></div>
+          <div class="dropdown btn-iclick ">
+            <i class="icon-setup icon_act icon_campaign_edit"></i>
+              <input name="type" type="hidden" value="" />
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              PC-视频广告15秒
+              <span class="caret arrow-down"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li   data-value="import"><a href="javascript:;">Mobile-视频广告-15秒</a></li>
+              <li data-value="export"><a href="javascript:;">PC-视频广告15秒</a></li>
+            </ul>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+</body>
+ <script type="text/javascript" >
+  var html = '<li>'+
+              '<img src="https://xmostg.optimix.asia/images/login/title.png" >'+
+              '<div><label>300*250</label></div>'+
+              '<div class="dropdown btn-iclick ">'+
+                '<i class="icon-setup icon_act icon_campaign_edit"></i>'+
+                  '<input name="type" type="hidden" value="" />'+
+                '<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'+
+                  'PC-视频广告15秒'+
+                  '<span class="caret arrow-down"></span>'+
+                '</button>'+
+                '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">'+
+                  '<li   data-value="import"><a href="javascript:;">Mobile-视频广告-15秒</a></li>'+
+                  '<li data-value="export"><a href="javascript:;">PC-视频广告15秒</a></li>'+
+                '</ul>'+
+              '</div>'+
+            '</li>';
+
+  //ajax
+  $(function(){
+   //详细文档参考：http://fex.baidu.com/webuploader/getting-started.html
+    new xmoupload({
+
+         // swf文件路径
+        swf: 'plugin/webuploader/Uploader.swf',
+
+        //runtimeOrder:"flash",
+
+        // 文件接收服务端。
+        server: 'http://localhost:8081',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false,
+
+        dnd:'.webuploader-fordnd',
+
+        disableGlobalDnd: true,
+
+        paste: document.body,
+
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,swf,png,zip'
+        },
+
+        auto:true,
+
+        //xmo 的相关参数
+        //ZH,EN
+        lang:"EN",
+        uploadError:function(file){
+          $("body").append( '<div id="' + file.id + '" class="item">' +
+              '<h4 class="info">' + file.name + '上传失败</h4>' +
+          '</div>' );
+          setTimeout(function(){$("#"+file.id).remove()},3000);
+        },
+
+        uploadSuccess:function(file,response){
+          $("#dnd-content").append(html);
+          setTimeout(function(){$("#"+file.id).remove()},3000);
+        }
+      })
+  })
+
+
+ </script>
+</html>

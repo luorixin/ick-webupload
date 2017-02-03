@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/bootstrap/css/bootstrap.css?9300">
+    <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/stylesheets/xmo/xmo_components.css?9300">
+     <link rel="stylesheet" type="text/css" href="plugin/webuploader/webuploader.css">
+      <link rel="stylesheet" type="text/css" href="css/webupload-xmo.css">
+
+    <script type="text/javascript" src="http://xmostg.optimix.asia/javascripts/js/jquery-1.7.1.min.js?9300"></script>
+    <script type="text/javascript" src="http://xmostg.optimix.asia/bootstrap/js/bootstrap.min.js?9300"></script>
+
+    <script type="text/javascript" src="plugin/webuploader/webuploader.js"></script>
+    <script type="text/javascript" src="js/webupload-xmo.js"></script>
+    <script type="text/javascript" src="http://xmostg.optimix.asia/javascripts/radialIndicator.min.js?9300"></script>
+
+
+</head>
+
+<body>
+
+  <div class="clearfix">
+    <div id="webuploader" style="padding:20px;float:left">
+        <div class="webuploader-fordnd-single">
+          <div class="webuploader-dnaArea-single">
+          </div>
+          <button class="btn" id="filePicker" style="display:none;width:100%;height:100%;">upload</button>
+        </div>
+    </div>
+    <div class="table_cell" style="float:left;line-height:166px;">
+      <a href="javascript:void(0)" class="row_add link upload_copy"><i class="icon-add-big"></i>Add</a>
+    </div>
+  </div>
+</body>
+ <script type="text/javascript" >
+
+ var html = '<div class="webuploader-content">'+
+              '<label >(<a href="javascript:;" onclick="$(this).parent().parent().prev().find(\'[type=file]\').trigger(\'click\');">重新选择</a>'+
+              ' | <a href="javascript:;" onclick="$(this).parent().parent().parent().remove();">删除</a>)</label>'+
+            '</div>';
+  var content ='<div class="webuploader-fordnd-single">'+
+                '<div class="webuploader-dnaArea-single">'+
+                '</div>'+
+                '<button class="btn" id="filePicker" style="display:none;width:100%;height:100%;">upload</button>'+
+                '</div>';
+  var baseOption = {
+      swf: 'plugin/webuploader/Uploader.swf',
+      server: 'http://localhost:8081',
+      pick: '#webuploader #filePicker',
+      resize: false,
+      dnd:'#webuploader .webuploader-fordnd-single',
+      disableGlobalDnd: true,
+      paste: document.body,
+      accept: {
+          title: 'Images',
+          extensions: 'gif,jpg,jpeg,swf,png,zip'
+      },
+      auto:true,
+      //xmo 的相关参数
+      //ZH,EN
+      lang:"EN",
+      uploadError:function(file){
+        $("body").append( '<div id="' + file.id + '" class="item">' +
+            '<h4 class="info">' + file.name + '上传失败</h4>' +
+        '</div>' );
+        setTimeout(function(){$("#"+file.id).remove()},3000);
+      },
+      fileQueued:function(file,_this){
+        var $img =$("<img>");
+        $(_this.settings.dnd).find(".webuploader-dnaArea-single").empty().append($img);
+
+        var thumbnailWidth=120,thumbnailHeight=120;
+        _this.upload.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+
+            $img.attr( 'src', src );
+        }, thumbnailWidth, thumbnailHeight );
+      },
+      uploadSuccess:function(file,response,_this){
+        if($(_this.settings.dnd).next().length==0){
+          $(_this.settings.dnd).after(html);
+        }
+
+      }
+    }
+
+
+  $(document).on("click",".webuploader-dnaArea-single",function(e){
+    $(this).parent().find("[type='file']").trigger("click");
+  })
+
+  $(".upload_copy").on("click",function () {
+    var length = $(this).parent().prevAll().length;
+    if(length>4) return;
+    var index = new Date().getTime();
+    var $div = $("<div/>",{
+      "id":"webuploader"+index,
+      "style":"padding:20px;float:left"
+    })
+    $div.append(content);
+    $(this).parent().before($div);
+    baseOption.pick='#webuploader'+index+' #filePicker';
+    baseOption.dnd='#webuploader'+index+' .webuploader-fordnd-single';
+    getupload(baseOption);
+  })
+
+  getupload(baseOption);
+  //ajax
+  function getupload(options){
+   //详细文档参考：http://fex.baidu.com/webuploader/getting-started.html
+    new xmoupload(options);
+  }
+
+
+ </script>
+</html>
